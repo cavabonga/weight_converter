@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Weight Converter</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Condensed:400,700" rel="stylesheet">
+
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 class="text-center">Weight Converter</h1>
+        <div id="input">
+          <select name="weightSelect" id="weightType">
+            <option>Choose weight unit</option>
+            <option value="1">Kilograms</option>
+            <option value="2">Pounds</option>
+            <option value="3">Grams</option>
+          </select><br>
+          <input type="number" value="0" id="weightValue">
+        </div>
+        <div id="output">
+          <div class="card card-primary mb-2" id="kgCard">
+            <div class="card-block">
+              <h4>Kilograms: </h4>
+              <h4 id="toKg"></h4>
+            </div>
+          </div>
+          <div class="card card-success mb-2" id="lbCard">
+            <div class="card-block">
+              <h4>Pounds: </h4>
+              <h4 id="toPounds"></h4>
+            </div>
+          </div>
+          <div class="card card-danger mb-2" id="grCard">
+            <div class="card-block">
+              <h4>Grams: </h4>
+              <h4 id="toGrams"></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<script>
+
+  const weightType = document.getElementById('weightType');
+  const weightValue = document.getElementById('weightValue');
+  const kgCard = document.getElementById('kgCard');
+  const lbCard = document.getElementById('lbCard');
+  const grCard = document.getElementById('grCard');
+  const toPounds = document.getElementById('toPounds');
+  const toKg = document.getElementById('toKg');
+  const toGrams = document.getElementById('toGrams');
+  const output = document.getElementById('output');
+
+  // List of all cards
+  const cardArray = ['kgCard', 'lbCard', 'grCard'];
+  // Keep track of select box
+  let wt = 0;
+
+  // Hide input and weight cards at startup
+  weightValue.style.visibility = 'hidden';
+  output.style.visibility = 'hidden';
+
+  // Listen for change in select box
+  weightType.addEventListener('change', (e) => {
+    // Show input box and cards
+    weightValue.style.visibility = 'visible';
+    output.style.visibility = 'visible';
+    // Get current selected option value
+    let val = e.target.value;
+    // Hide selected card and display the rest
+    if(val === '1') {
+      wt = 1;
+      hideCard('kgCard');
+    }
+    if(val === '2') {
+      wt = 2;
+      hideCard('lbCard');
+    }
+    if(val === '3') {
+      wt = 3;
+      hideCard('grCard');
+    }
+});
+
+// Updates converted values on input
+weightValue.addEventListener('input', (e) => {
+  let val = e.target.value;
+  convert(wt, val);
+});
+
+// FUNCTION that hides selected card and displays the rest
+function hideCard(card) {
+  for(var i=0; i < cardArray.length; i++) {
+    if(cardArray[i] === card) {
+      let match = cardArray[i];
+      document.getElementById(match).style.display = 'none';
+    } else {
+      document.getElementById(cardArray[i]).style.display = 'block';
+    }
+  }
+  updateValues();
+}
+
+// FUNCTION Used only with hideCard function
+// Updates cards converted values when selected weight type has changed
+function updateValues() {
+  let val = weightValue.value;
+  convert(wt, val);
+}
+
+// FUNCTION handles all conversions
+function convert(wt, val){
+  switch(wt){
+    case 1: // Kilos to
+      toPounds.innerHTML = (val*2.2046).toFixed(2);
+      toGrams.innerHTML = (val*1000);
+      break;
+    case 2: // Pounds to
+      toKg.innerHTML = (val/2.2046).toFixed(2);
+      toGrams.innerHTML = (val/0.0022046).toFixed(2);
+      break;
+    case 3: // Grams to
+      toKg.innerHTML = (val/1000).toFixed(2);
+      toPounds.innerHTML = (val/500).toFixed(2);
+      break;
+  }
+}
+
+</script>
+
+
+</body>
+</html>

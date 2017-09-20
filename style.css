@@ -1,0 +1,24 @@
+body {
+  margin-top: 70px;
+  background: #333;
+  color: #fff;
+  font-family: 'Encode Sans Semi Condensed', sans-serif;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: crimson;
+}
+
+select, input {
+  width: 100%;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 0;
+  padding: 10px;
+  text-indent: 10px;
+  outline: none;
+  margin-bottom: 10px;
+}
